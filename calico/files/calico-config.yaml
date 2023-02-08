@@ -1,0 +1,28 @@
+# This section includes base Calico installation configuration.
+# For more information, see: https://docs.projectcalico.org/v3.17/reference/installation/api#operator.tigera.io/v1.Installation
+apiVersion: operator.tigera.io/v1
+kind: Installation
+metadata:
+  name: default
+  namespace: default
+spec:
+  variant: Calico
+  cni:
+    type: Calico
+    ipam:
+      type: Calico
+  # Configures Calico networking.
+  calicoNetwork:
+    # https://docs.projectcalico.org/networking/bgp
+    bgp: Enabled
+    mtu: 8000
+    containerIPForwarding: Disabled
+    ipPools:
+    - blockSize: 26
+      cidr: 10.244.0.0/16
+      # https://docs.projectcalico.org/networking/vxlan-ipip
+      encapsulation: IPIP
+      # https://docs.projectcalico.org/networking/workloads-outside-cluster
+      natOutgoing: Enabled
+      nodeSelector: all()
+  nodeMetricsPort: 9532

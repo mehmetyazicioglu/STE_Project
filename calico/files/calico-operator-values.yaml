@@ -1,0 +1,6 @@
+imagePullSecrets: {}
+
+installation:
+  enabled: true
+
+
